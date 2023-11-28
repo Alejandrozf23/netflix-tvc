@@ -7,7 +7,7 @@ export default function Browse() {
 
     const { data: session } = useSession();
 
-    console.log(session);
+    console.log(session, 'session');
 
     if (session === null) return <UnauthPage/>
 
