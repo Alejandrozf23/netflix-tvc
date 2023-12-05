@@ -8,14 +8,15 @@ import { useContext } from "react";
 
 export default function Browse() {
 
-    const {loggedInAccount} = useContext(GlobalContext);
+    const { loggedInAccount } = useContext(GlobalContext);
 
     const { data: session } = useSession();
 
     console.log(session, 'session');
 
     if (session === null) return <UnauthPage/>
-    if (loggedInAccount === null) return <ManageAccounts />
+    
+    if (loggedInAccount === null) return <ManageAccounts/>
 
     return <div>Browse</div>
 }
