@@ -2,7 +2,7 @@
 
 import { GlobalContext } from "@/context"
 import { useSession } from "next-auth/react";
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 export default function ManageAccounts() {
 
@@ -15,11 +15,17 @@ export default function ManageAccounts() {
             `/api/account/get-all-accounts?id=${session?.user?.uid}`,
             {method: "GET"}
         );
-
-        const data = await response.json();
         
+        const data = await response.json();
+
+        console.log(data);
+
         return data;
     }
+
+    useEffect(() => {
+        getAllAccounts();
+    }, [])
 
     return <div className="min-h-screen flex justify-center flex-col items-center relative">
         <div className="flex justify-center flex-col items-center">

@@ -39,7 +39,7 @@ export async function POST(request) {
         } else {
             return NextResponse.json({
                 success: false,
-                message: "Something wnet wrong!",
+                message: "Something went wrong!",
             });
         }
         
@@ -47,7 +47,7 @@ export async function POST(request) {
         console.log(e);
         return NextResponse.json({
             success: false,
-            message: "Something wnet wrong!",
+            message: "Something went wrong!",
         });
     }
 }
