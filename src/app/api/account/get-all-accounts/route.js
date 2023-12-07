@@ -19,7 +19,7 @@ export async function GET(request) {
         } else {
             return NextResponse.json({
                 success: false,
-                message: "Something wnet wrong!",
+                message: "Something went wrong!",
             });
         }
 
@@ -27,7 +27,7 @@ export async function GET(request) {
         console.log(e);
         return NextResponse.json({
             success: false,
-            message: "Something wnet wrong!",
+            message: "Something went wrong!",
         });
     }
 }

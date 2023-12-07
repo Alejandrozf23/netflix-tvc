@@ -3,11 +3,12 @@ const { MongoClient } = require('mongodb');
 
 dotenv.config(); // Cargar variables de entorno desde el archivo .env
 
-const { MONGO_USER, MONGO_PASSWORD, MONGO_URI } = process.env;
+const { MONGO_USER, MONGO_PASSWORD } = process.env;
+
+const uri = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@cluster0.mongodb.net/test?retryWrites=true&w=majority`;
 
 const connectMongoDB = async () => {
     try {
-        const uri = 'mongodb+srv://'+MONGO_USER+':'+MONGO_PASSWORD+'@cluster0.mongodb.net/test?retryWrites=true&w=majority';
         const client = new MongoClient(uri);
         await client.connect();
         console.log('Mongo connection successfully!');
