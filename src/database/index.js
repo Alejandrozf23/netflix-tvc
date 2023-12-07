@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
+const { MongoClient } = require('mongodb');
 
 dotenv.config(); // Cargar variables de entorno desde el archivo .env
 
@@ -7,14 +7,12 @@ const { MONGO_USER, MONGO_PASSWORD, MONGO_URI } = process.env;
 
 const connectMongoDB = async () => {
     try {
-        await mongoose.connect(MONGO_URI, {
-            auth: { user: MONGO_USER, password: MONGO_PASSWORD },
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        console.log('Conexión exitosa a MongoDB');
+        const uri = 'mongodb+srv://'+MONGO_USER+':'+MONGO_PASSWORD+'@cluster0.mongodb.net/test?retryWrites=true&w=majority';
+        const client = new MongoClient(uri);
+        await client.connect();
+        console.log('Mongo connection successfully!');
     } catch (e) {
-        console.error('Error al conectar a MongoDB:', e.message);
+        console.error('Error to connect Mongo: ', e.message);
     }
 }
 
