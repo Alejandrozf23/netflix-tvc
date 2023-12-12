@@ -9,9 +9,16 @@ export async function GET(request) {
         await connectMongoDB();
         const {searchParams} = new URL(request.url);
         const id = searchParams.get('id');
-        const getAllAccounts = await Account.find({uid: id});
-
-        if (getAllAccounts) {
+        const query = { uid: id };
+        const getAllAccounts = await Account.find(query);
+        
+        if (getAllAccounts.length === 0) {
+            return NextResponse.json({
+                success: true,
+                data: "Colection is empty!",
+            })
+        }
+        else if (getAllAccounts) {
             return NextResponse.json({
                 success: true,
                 data: getAllAccounts,

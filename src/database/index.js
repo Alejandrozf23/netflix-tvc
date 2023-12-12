@@ -5,10 +5,11 @@ dotenv.config(); // Cargar variables de entorno desde el archivo .env
 
 const { MONGO_USER, MONGO_PASSWORD } = process.env;
 
-const uri = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@cluster0.mongodb.net/test?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@clusterntvc.mib10go.mongodb.net/?retryWrites=true&w=majority`;
 
 const connectMongoDB = async () => {
     try {
+        console.log(uri);
         const client = new MongoClient(uri);
         await client.connect();
         console.log('Mongo connection successfully!');

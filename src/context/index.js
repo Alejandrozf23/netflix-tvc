@@ -9,14 +9,14 @@ export const GlobalContext = createContext(null);
 export default function GlobalState({ children }) {
 
     const [loggedInAccount, setLoggedInAccount] = useState(null);
-    const [account, setAccounts] = useState([]);
+    const [accounts, setAccounts] = useState([]);
 
     const {data: session} = useSession();
 
     if (session === undefined) return <CircleLoader/>
 
     return (
-        <GlobalContext.Provider value={{loggedInAccount, setLoggedInAccount, account, setAccounts}}>
+        <GlobalContext.Provider value={{loggedInAccount, setLoggedInAccount, accounts, setAccounts}}>
             {children}
         </GlobalContext.Provider>
     )

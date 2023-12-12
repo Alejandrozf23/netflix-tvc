@@ -6,14 +6,15 @@ import { useContext, useEffect } from "react"
 
 export default function ManageAccounts() {
 
-    const { account, setAccounts } = useContext(GlobalContext);
+    const { accounts, setAccounts } = useContext(GlobalContext);
 
     const { data: session } = useSession();
 
     async function getAllAccounts() {
+        console.log(`Manage account = ${session?.user.uid}`)
         const response = await fetch(
-            `/api/account/get-all-accounts?id=${session?.user?.uid}`,
-            {method: "GET"}
+            `/api/account/get-all-accounts?id=${session?.user.uid}`,
+            { method: "GET" }
         );
         
         const data = await response.json();
