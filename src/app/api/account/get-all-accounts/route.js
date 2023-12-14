@@ -12,13 +12,7 @@ export async function GET(request) {
         const query = { uid: id };
         const getAllAccounts = await Account.find(query);
         
-        if (getAllAccounts.length === 0) {
-            return NextResponse.json({
-                success: true,
-                data: "Colection is empty!",
-            })
-        }
-        else if (getAllAccounts) {
+        if (getAllAccounts) {
             return NextResponse.json({
                 success: true,
                 data: getAllAccounts,
