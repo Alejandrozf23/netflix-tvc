@@ -2,13 +2,13 @@
 
 import { GlobalContext } from "@/context"
 import { useSession } from "next-auth/react";
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import CircleLoader from "../circle-loader";
 
 export default function ManageAccounts() {
 
     const { accounts, setAccounts, pageLoader, setPageLoader } = useContext(GlobalContext);
-
+    
     const { data: session } = useSession();
 
     async function getAllAccounts() {
@@ -43,12 +43,14 @@ export default function ManageAccounts() {
             <ul className="flex gap-8 p-0 my-[25px]">
                 {
                     accounts && accounts.length ?
-                        accounts.map(item => <li className="w-[155px] flex flex-col items-center gap-3 max-w-[200px] min-w-[200px]" key={item.id}>
+                        accounts.map(item => <li className="w-[155px] flex flex-col 
+                            items-center gap-3 max-w-[200px] min-w-[200px]" key={item.id}>
                             <div className="relative">
                                 <img
                                     src="https://occ-0-2611-3663.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABfNXUMVXGhnCZwPI1SghnGpmUgqS_J-owMff-jig42xPF7vozQS1ge5xTgPTzH7ttfNYQXnsYs4vrMBaadh4E6RTJMVepojWqOXx.png?r=1d4"
                                     alt="Account"
-                                    className="max-w-[200px] rounded min-w-[84px] max-h-[200px] min-h-[84px] object-cover w-[155px] h-[155px]">
+                                    className="max-w-[200px] rounded min-w-[84px] max-h-[200px] 
+                                        min-h-[84px] object-cover w-[155px] h-[155px]">
                                 </img>
                             </div>
                             <span className="mb-4">{item.name}</span>
@@ -71,6 +73,15 @@ export default function ManageAccounts() {
                             </svg>
                         </li>)
                         : null
+                }
+                {
+                    accounts && accounts.length < 4 ?
+                    <li className="border text-black bg-[#E5B109] font-bold text-lg border-black 
+                        max-w-[200px] rounded min-w-[84px] max-h-[200px] min-h-[84px] w-[155px] h-[155px] 
+                        cursor-pointer flex justify-center items-center">
+                        Add account
+                    </li>
+                    : null
                 }
             </ul>
         </div>
