@@ -4,11 +4,18 @@ import { GlobalContext } from "@/context"
 import { useSession } from "next-auth/react";
 import { useContext, useEffect, useState } from "react"
 import CircleLoader from "../circle-loader";
+import AccountForm from "./account-form";
+
+const initialFormData = {
+    name: '',
+    pwd: ''
+}
 
 export default function ManageAccounts() {
 
     const { accounts, setAccounts, pageLoader, setPageLoader } = useContext(GlobalContext);
-    
+    const [showAccountForm, setShowAccountForm] = useState(false);
+    const [formData, setFormData] = useState(initialFormData);
     const { data: session } = useSession();
 
     async function getAllAccounts() {
@@ -31,7 +38,11 @@ export default function ManageAccounts() {
 
     useEffect(() => {
         getAllAccounts();
-    }, [])
+    }, []);
+
+    async function handleSave() {
+
+    }
 
     if (pageLoader) return <CircleLoader />
 
@@ -76,7 +87,8 @@ export default function ManageAccounts() {
                 }
                 {
                     accounts && accounts.length < 4 ?
-                    <li className="border text-black bg-[#E5B109] font-bold text-lg border-black 
+                    <li onClick={ () => setShowAccountForm(!showAccountForm)} 
+                        className="border text-black bg-[#E5B109] font-bold text-lg border-black 
                         max-w-[200px] rounded min-w-[84px] max-h-[200px] min-h-[84px] w-[155px] h-[155px] 
                         cursor-pointer flex justify-center items-center">
                         Add account
@@ -85,5 +97,6 @@ export default function ManageAccounts() {
                 }
             </ul>
         </div>
+        <AccountForm formData={formData} setFormData={setFormData} showAccountForm={showAccountForm} handleSave={handleSave}/>
     </div>
 }
