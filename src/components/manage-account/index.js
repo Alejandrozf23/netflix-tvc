@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react"
 import { TrashIcon } from '@heroicons/react/24/outline'
 import CircleLoader from "../circle-loader";
 import AccountForm from "./account-form";
+import PinContainer from "./pin-cointainer";
 
 const initialFormData = {
     name: '',
@@ -18,6 +19,9 @@ export default function ManageAccounts() {
     const [showAccountForm, setShowAccountForm] = useState(false);
     const [formData, setFormData] = useState(initialFormData);
     const [showDeleteIcon, setShowDeleteIcon] = useState(false);
+    const [pin, setPin] = useState('');
+    const [pinError, setPinError] = useState(false);
+    const [showPinContainer, setShowPinContainer] = useState({show: false, account: null});
     const { data: session } = useSession();
 
     async function getAllAccounts() {
@@ -75,6 +79,10 @@ export default function ManageAccounts() {
         }
     }
 
+    async function handlePinSubmit() {
+
+    }
+
     if (pageLoader) return <CircleLoader />
 
     return <div className="min-h-screen flex justify-center flex-col items-center relative">
@@ -85,8 +93,9 @@ export default function ManageAccounts() {
             <ul className="flex gap-8 p-0 my-[25px]">
                 {
                     accounts && accounts.length ?
-                        accounts.map(item => <li className="w-[155px] flex flex-col 
-                            items-center gap-3 max-w-[200px] min-w-[200px]" key={item._id}>
+                        accounts.map(item => (<li className="w-[155px] flex flex-col 
+                            items-center gap-3 max-w-[200px] min-w-[200px]" key={item._id}
+                            onClick={showDeleteIcon ? null : () => setShowPinContainer({show: true, account: item})}>
                             <div className="relative">
                                 <img
                                     src="https://occ-0-2611-3663.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABfNXUMVXGhnCZwPI1SghnGpmUgqS_J-owMff-jig42xPF7vozQS1ge5xTgPTzH7ttfNYQXnsYs4vrMBaadh4E6RTJMVepojWqOXx.png?r=1d4"
@@ -122,7 +131,7 @@ export default function ManageAccounts() {
                                     fill="currentColor"
                                 ></path>
                             </svg>
-                        </li>)
+                        </li>))
                         : null
                 }
                 {
@@ -143,6 +152,10 @@ export default function ManageAccounts() {
                 </span>
             </div>
         </div>
-        <AccountForm formData={formData} setFormData={setFormData} showAccountForm={showAccountForm} handleSave={handleSave}/>
+        <PinContainer pin={pin} setPin={setPin} pinError={pinError} 
+            setPinError={setPinError} showPinContainer={showPinContainer.show} 
+            setShowPinContainer={setShowPinContainer} handlePinSubmit={handlePinSubmit}/>
+        <AccountForm formData={formData} setFormData={setFormData} 
+            showAccountForm={showAccountForm} handleSave={handleSave}/>
     </div>
 }
