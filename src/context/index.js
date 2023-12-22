@@ -17,7 +17,7 @@ export default function GlobalState({ children }) {
     if (session === undefined) return <CircleLoader/>
 
     return (
-        <GlobalContext.Provider value={{loggedInAccount, setLoggedInAccount, accounts, setAccounts}}>
+        <GlobalContext.Provider value={{loggedInAccount, setLoggedInAccount, accounts, setAccounts, pageLoader, setPageLoader}}>
             {children}
         </GlobalContext.Provider>
     )
