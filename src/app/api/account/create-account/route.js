@@ -8,11 +8,11 @@ export const dynamic = "force-dynamic";
 export async function POST(request) {
     try {
         await connectMongoDB();
-        const {name, pin, uid} = await request.json();
+        const {name, pwd, uid} = await request.json();
         const isAccountAlreadyExists = await Account.find({uid, name});
         const allAccounts = await Account.find({});
 
-        if (isAccountAlreadyExists) {
+        if (isAccountAlreadyExists && isAccountAlreadyExists.length > 0) {
             return NextResponse.json({
                 succes: false,
                 message: "Please try with a different name!",
@@ -25,10 +25,12 @@ export async function POST(request) {
                 message: "You can only add max 4 accounts!",
             });
         }
-
-        const hashPin = await hash(pin, 12);
+        
+        const hashPwd = await hash(pwd, 12);
         const newlyCreatedAccount = await Account.create({
-            name, pin: hashPin, uid,
+            name,
+            pin: hashPwd,
+            uid,
         });
 
         if (newlyCreatedAccount) {

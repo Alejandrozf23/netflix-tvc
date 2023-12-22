@@ -41,7 +41,19 @@ export default function ManageAccounts() {
     }, []);
 
     async function handleSave() {
+        const response = await fetch('/api/account/create-account', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ...formData,
+                uid: session?.user?.uid
+            })
+        });
 
+        const data = await response.json();
+        console.log(data, 'datadata')
     }
 
     if (pageLoader) return <CircleLoader />

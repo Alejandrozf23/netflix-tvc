@@ -16,6 +16,7 @@ export default function AccountForm({showAccountForm, formData, setFormData, han
                         text-lg text-[#E5B109] outline-none focus:outline-none'/>
                     <input name='pwd' type='password' value={formData['pwd']}
                         onChange={(e) => setFormData({...formData, [e.target.name] : e.target.value})}
+                        maxLength={4}
                         placeholder='Enter your password!'
                         className='px-5 py-3 rounded-lg placeholder:text-red-700 
                         text-lg text-[#E5B109] outline-none focus:outline-none'/>
