@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react"
 import { TrashIcon } from '@heroicons/react/24/outline'
 import CircleLoader from "../circle-loader";
 import AccountForm from "./account-form";
-import PinContainer from "./pin-cointainer";
+import PinContainer from "./pin-container";
 
 const initialFormData = {
     name: '',
@@ -93,7 +93,7 @@ export default function ManageAccounts() {
             <ul className="flex gap-8 p-0 my-[25px]">
                 {
                     accounts && accounts.length ?
-                        accounts.map(item => (<li className="w-[155px] flex flex-col 
+                        accounts.map(item => (<li className="w-[155px] flex flex-col cursor-pointer
                             items-center gap-3 max-w-[200px] min-w-[200px]" key={item._id}
                             onClick={showDeleteIcon ? null : () => setShowPinContainer({show: true, account: item})}>
                             <div className="relative">
