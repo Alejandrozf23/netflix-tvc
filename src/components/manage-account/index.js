@@ -99,7 +99,7 @@ export default function ManageAccounts() {
         
         if (data.success) {
             setLoggedInAccount(showPinContainer.account);
-            sessionStorage.setItem('loggeddInAccount', JSON.stringify(showPinContainer.account));
+            sessionStorage.setItem('loggedInAccount', JSON.stringify(showPinContainer.account));
             router.push(pathName);
             setPageLoader(false);
         } else {
