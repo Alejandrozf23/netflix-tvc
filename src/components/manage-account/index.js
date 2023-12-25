@@ -7,6 +7,7 @@ import { TrashIcon } from '@heroicons/react/24/outline'
 import CircleLoader from "../circle-loader";
 import AccountForm from "./account-form";
 import PinContainer from "./pin-container";
+import { usePathname, useRouter } from "next/navigation";
 
 const initialFormData = {
     name: '',
@@ -15,7 +16,7 @@ const initialFormData = {
 
 export default function ManageAccounts() {
 
-    const { accounts, setAccounts, pageLoader, setPageLoader } = useContext(GlobalContext);
+    const { accounts, setAccounts, pageLoader, setPageLoader, setLoggedInAccount } = useContext(GlobalContext);
     const [showAccountForm, setShowAccountForm] = useState(false);
     const [formData, setFormData] = useState(initialFormData);
     const [showDeleteIcon, setShowDeleteIcon] = useState(false);
@@ -23,6 +24,8 @@ export default function ManageAccounts() {
     const [pinError, setPinError] = useState(false);
     const [showPinContainer, setShowPinContainer] = useState({show: false, account: null});
     const { data: session } = useSession();
+    const pathName = usePathname();
+    const router = useRouter();
 
     async function getAllAccounts() {
         const response = await fetch(
@@ -79,8 +82,31 @@ export default function ManageAccounts() {
         }
     }
 
-    async function handlePinSubmit() {
+    async function handlePinSubmit(value, index) {
+        const response = await fetch('/api/account/login-to-account', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                uid: session?.user.uid,
+                accountId: showPinContainer.account._id,
+                pin: value
+            })
+        })
 
+        const data = await response.json();
+        
+        if (data.success) {
+            setLoggedInAccount(showPinContainer.account);
+            sessionStorage.setItem('loggeddInAccount', JSON.stringify(showPinContainer.account));
+            router.push(pathName);
+            setPageLoader(false);
+        } else {
+            setPageLoader(false);
+            setPinError(true);
+            setPin("");
+        }
     }
 
     if (pageLoader) return <CircleLoader />
