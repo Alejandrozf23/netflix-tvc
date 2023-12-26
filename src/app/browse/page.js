@@ -2,6 +2,7 @@
 
 import ManageAccounts from "@/components/manage-account"
 import UnauthPage from "@/components/unauth-page";
+import CommonLayout from "@/components/common-layout";
 import { GlobalContext } from "@/context";
 import { useSession } from "next-auth/react"
 import { useContext } from "react";
@@ -16,5 +17,7 @@ export default function Browse() {
     
     if (loggedInAccount === null) return <ManageAccounts/>
 
-    return <div>Browse</div>
+    return <main className="flex min-h-screen flex-col">
+        <CommonLayout/>
+    </main>
 }
