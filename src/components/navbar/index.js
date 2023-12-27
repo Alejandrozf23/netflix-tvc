@@ -2,12 +2,17 @@
 
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
+import Search from "./search";
+import { GlobalContext } from "@/context";
 
 export default function Navbar() {
-    const { data : session } = useSession();
+    const { data: session } = useSession();
+    const { setPageLoader } = useContext(GlobalContext);
     const [isScrolled, setIsScrolled] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
     const router = useRouter();
     const pathName = usePathname();
 
@@ -49,7 +54,7 @@ export default function Navbar() {
             }
         }
     }, []);
-    
+
     return <div className="relative">
         <header className={`header ${isScrolled && "bg-[#141414]"} hover:bg-[#141414]`}>
             <div className="flex items-center space-x-2 md:space-x-10">
@@ -57,7 +62,7 @@ export default function Navbar() {
                     src="https://rb.gy/ulxxee"
                     width={120} height={120} alt="NETFLIX"
                     className="cursor-pointer object-contain"
-                    onClick={() => router.push('/browse')}/>
+                    onClick={() => router.push('/browse')} />
                 <ul className="hidden md:space-x-4 md:flex cursor-pointer">
                     {
                         menuItems.map(
@@ -70,7 +75,22 @@ export default function Navbar() {
                 </ul>
             </div>
             <div className="font-light flex items-center space-x-4 text-sm">
-                
+                {
+                showSearchBar ? (
+                    <Search
+                        pathName={pathName}
+                        router={router}
+                        searchQuery={searchQuery}
+                        setSearchQuery={setSearchQuery}
+                        setPageLoader={setPageLoader}
+                        setShowSearchBar={setShowSearchBar}
+                    />
+                ) : (
+                    <AiOutlineSearch
+                        onClick={() => setShowSearchBar(true)}
+                        className="hidden sm:inline sm:w-6 sm:h-6 cursor-pointer"
+                    />
+                )}
             </div>
         </header>
     </div>
