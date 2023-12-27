@@ -9,10 +9,11 @@ import { GlobalContext } from "@/context";
 
 export default function Navbar() {
     const { data: session } = useSession();
-    const { setPageLoader } = useContext(GlobalContext);
+    const { setPageLoader, loggedInAccount } = useContext(GlobalContext);
     const [isScrolled, setIsScrolled] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [showAccountPopup, setShowAccountPopup] = useState(false);
     const router = useRouter();
     const pathName = usePathname();
 
@@ -91,6 +92,13 @@ export default function Navbar() {
                         className="hidden sm:inline sm:w-6 sm:h-6 cursor-pointer"
                     />
                 )}
+                <div onClick={() => setShowAccountPopup(true)} 
+                    className="flex gap-2 items-center cursor-pointer">
+                    <img src="https://occ-0-2611-3663.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABfNXUMVXGhnCZwPI1SghnGpmUgqS_J-owMff-jig42xPF7vozQS1ge5xTgPTzH7ttfNYQXnsYs4vrMBaadh4E6RTJMVepojWqOXx.png?r=1d4"
+                        alt="Current profile"
+                        className="max-w-[30px] rounded min-w-[20px] max-h-[30px] min-h-[20px] object-cover w-[30px] h-[30px]"/>
+                        <p>{loggedInAccount && loggedInAccount.name}</p>
+                </div>
             </div>
         </header>
     </div>

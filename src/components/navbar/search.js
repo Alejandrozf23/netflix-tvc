@@ -13,7 +13,7 @@ export default function Search({pathName, router,
                     name="search"
                     value={searchQuery}
                     onChange={(e)=>setSearchQuery(e.target.value)}
-                    placeholder="Search Movies, TV & Dramas!"
+                    placeholder="Search Movies & Series!"
                     className="bg-transparent text-[14px] font-medium h-[34px] px-4 py-2 
                         placeholder:text-[14px] font-md text-white outline-none w-[210px]"/>
             </div>
