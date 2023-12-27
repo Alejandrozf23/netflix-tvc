@@ -1,15 +1,16 @@
 'use client'
 
-import { useSession } from "next-auth/react";
+import { GlobalContext } from "@/context";
+import { signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import Search from "./search";
-import { GlobalContext } from "@/context";
+import AccountPopup from "./account-popup";
 
 export default function Navbar() {
     const { data: session } = useSession();
-    const { setPageLoader, loggedInAccount } = useContext(GlobalContext);
+    const { setPageLoader, loggedInAccount, setAccounts, accounts, setLoggedInAccount } = useContext(GlobalContext);
     const [isScrolled, setIsScrolled] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -56,6 +57,26 @@ export default function Navbar() {
         }
     }, []);
 
+    async function getAllAccounts() {
+        const response = await fetch(
+            `/api/account/get-all-accounts?id=${session?.user.uid}`,
+            { method: "GET" }
+        );
+
+        const data = await response.json();
+
+        if (data && data.data && data.data.length) {
+            setAccounts(data.data);
+            setPageLoader(false);
+        } else {
+            setPageLoader(false);
+        }
+    }
+
+    useEffect(() => {
+        getAllAccounts();
+    }, [])
+
     return <div className="relative">
         <header className={`header ${isScrolled && "bg-[#141414]"} hover:bg-[#141414]`}>
             <div className="flex items-center space-x-2 md:space-x-10">
@@ -92,7 +113,7 @@ export default function Navbar() {
                         className="hidden sm:inline sm:w-6 sm:h-6 cursor-pointer"
                     />
                 )}
-                <div onClick={() => setShowAccountPopup(true)} 
+                <div onClick={() => setShowAccountPopup(!showAccountPopup)} 
                     className="flex gap-2 items-center cursor-pointer">
                     <img src="https://occ-0-2611-3663.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABfNXUMVXGhnCZwPI1SghnGpmUgqS_J-owMff-jig42xPF7vozQS1ge5xTgPTzH7ttfNYQXnsYs4vrMBaadh4E6RTJMVepojWqOXx.png?r=1d4"
                         alt="Current profile"
@@ -101,5 +122,13 @@ export default function Navbar() {
                 </div>
             </div>
         </header>
+        {
+            showAccountPopup && 
+            <AccountPopup accounts={accounts}
+                setPageLoader={setPageLoader}
+                singOut={signOut}
+                loggedInAccount={loggedInAccount}
+                setLoggedInAccount={setLoggedInAccount}/>
+        }
     </div>
 }
