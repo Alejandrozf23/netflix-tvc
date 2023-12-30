@@ -11,7 +11,8 @@ export default function AccountPopup({ accounts,
             {
                 accounts
                     .filter(item => item._id !== loggedInAccount._id)
-                    .map(account => <div className="cursor-pointer flex gap-5" key={account._id}>
+                    .map(account => <div onClick={() => { setLoggedInAccount(null); sessionStorage.removeItem('loggedInAccount') }}
+                        className="cursor-pointer flex gap-5" key={account._id}>
                         <img src="https://occ-0-2611-3663.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABfNXUMVXGhnCZwPI1SghnGpmUgqS_J-owMff-jig42xPF7vozQS1ge5xTgPTzH7ttfNYQXnsYs4vrMBaadh4E6RTJMVepojWqOXx.png?r=1d4"
                             alt="Current profile"
                             className="max-w-[30px] rounded min-w-[20px] max-h-[30px] min-h-[20px] object-cover w-[30px] h-[30px]" />

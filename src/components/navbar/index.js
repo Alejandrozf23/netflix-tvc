@@ -7,10 +7,11 @@ import { useContext, useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import Search from "./search";
 import AccountPopup from "./account-popup";
+import CircleLoader from "../circle-loader";
 
 export default function Navbar() {
     const { data: session } = useSession();
-    const { setPageLoader, loggedInAccount, setAccounts, accounts, setLoggedInAccount } = useContext(GlobalContext);
+    const { pageLoader, setPageLoader, loggedInAccount, setAccounts, accounts, setLoggedInAccount } = useContext(GlobalContext);
     const [isScrolled, setIsScrolled] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -76,6 +77,8 @@ export default function Navbar() {
     useEffect(() => {
         getAllAccounts();
     }, [])
+
+    if (pageLoader) return <CircleLoader/>
 
     return <div className="relative">
         <header className={`header ${isScrolled && "bg-[#141414]"} hover:bg-[#141414]`}>
