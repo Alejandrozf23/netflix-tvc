@@ -29,14 +29,17 @@ export default function Browse() {
                 [
                     ...[
                         {
+                            id: "trendingtvshows",
                             title: "Trending TV Shows",
                             medias: trendingTvSHow
                         },
                         {
+                            id: "populartvshows",
                             title: "Popular TV Shows",
                             medias: popularTvSHow
                         },
                         {
+                            id: "topratedtvshows",
                             title: "Top rated TV Shows",
                             medias: topratedTvSHow
                         }
@@ -49,14 +52,17 @@ export default function Browse() {
                     })),
                     ...[
                         {
+                            id: "trendingmoviesshows",
                             title: "Trending Movies Shows",
                             medias: trendingMovieSHow
                         },
                         {
+                            id: "popularmoviesshows",
                             title: "Popular Movies Shows",
                             medias: popularMovieSHow
                         },
                         {
+                            id: "topratedmoviesshows",
                             title: "Top rated Movies Shows",
                             medias: topratedMovieSHow
                         }
@@ -69,7 +75,6 @@ export default function Browse() {
                     }))
                 ]
             );
-
             setPageLoader(false);
         }
 
@@ -82,9 +87,9 @@ export default function Browse() {
 
     if (pageLoader) return <CircleLoader/>
 
-    console.log(mediaData);
+
 
     return <main className="flex min-h-screen flex-col">
-        <CommonLayout/>
+        <CommonLayout mediaData={mediaData}/>
     </main>
 }
