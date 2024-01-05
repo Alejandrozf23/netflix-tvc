@@ -1,7 +1,8 @@
 'use client'
 
-import { motion } from "framer-motion"
 import Image from "next/image"
+import { motion } from "framer-motion"
+import { PlusIcon, ChevronDownIcon, CheckIcon } from "@heroicons/react/24/outline"
 
 export default function MediaData({media, title}) {
     const baseUrl = "https://image.tmdb.org/t/p/original"
@@ -23,11 +24,20 @@ export default function MediaData({media, title}) {
                 sizes="100vw"
                 className="rounded sm object-cover md:rounded hover:rounded-sm"
             />
-        </div>
-        <div className="space-x-3 hidden absolute p-2 bottom-0 buttonWrapper">
-            <button>
-                
-            </button>
-        </div>
+            <div className="space-x-3 hidden absolute p-2 bottom-0 buttonWrapper">
+                <button className=" cursor-pointer border flex p-2 items-center gap-x-2 rounded-full text-sm
+                    font-semibold transition hover:opacity-90 border-white bg-black opacity-75 text-black">
+                    {
+                        media?.addedToFavorites ? 
+                            (<CheckIcon color="#ffffff" className="h-7 w-7"/>):
+                            (<PlusIcon color="#ffffff" className="h-7 w-7"/>)
+                    }
+                </button>
+                <button className="cursor-pointer p-2 border flex items-center gap-x-2 rounded-full
+                    text-sm font-semibold transition hover:opacity-90 border-white bg-black opacity-75">
+                    <ChevronDownIcon  color="#ffffff" className="h-7 w-7"/>
+                </button>
+            </div>
+        </div> 
     </motion.div>
 }
