@@ -36,7 +36,7 @@ export default function Banner({ medias }) {
             </button>
             <button
                 className="cursor-pointer flex items-center gap-x-2 rounded px-5 py-1.5 text-sm font-semibold 
-                transition hover:opacity-75 md:py-2.5 md:px-8 md:text-xl bg-[gray]/70 text-black">
+                transition hover:opacity-75 md:py-2.5 md:px-8 md:text-xl bg-[gray]/70">
                 <IoMdInformationCircleOutline className="h-5 w-5 md:h-8 md:w-8 cursor-pointer"/>
                 More info
             </button>
