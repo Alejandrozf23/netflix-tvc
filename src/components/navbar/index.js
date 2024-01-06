@@ -92,7 +92,13 @@ export default function Navbar() {
                     {
                         menuItems.map(
                             item => <li className="cursor-pointer text-[16px] font-light 
-                                text-[#E5E5E5] transition duration-[.4s] hover:text-[#B3B3B3]" key={item.id}>
+                                text-[#E5E5E5] transition duration-[.4s] hover:text-[#B3B3B3]" key={item.id}
+                                onClick={() => {
+                                    setPageLoader(true);
+                                    router.push(item.path);
+                                    setSearchQuery('');
+                                    setShowSearchBar(false);
+                                }}>
                                 {item.title}
                             </li>
                         )
