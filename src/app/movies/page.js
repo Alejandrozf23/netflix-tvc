@@ -1,5 +1,6 @@
 'use client'
 
+import CommonLayout from "@/components/common-layout";
 import ManageAccounts from "@/components/manage-account";
 import UnauthPage from "@/components/unauth-page";
 import { GlobalContext } from "@/context";
@@ -16,5 +17,7 @@ export default function Movies() {
 
     if (loggedInAccount === null) return <ManageAccounts/>
 
-    return <div>Movies</div>
+    return <main className=" flex min-h-screen flex-col">
+        <CommonLayout mediaData={[]}/>
+    </main>
 }
