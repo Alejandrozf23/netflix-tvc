@@ -10,8 +10,7 @@ export default function Banner({ medias }) {
     const createRandomMedia = medias && medias.length ?
         medias[Math.floor(Math.random() * medias.length)] : null;
 
-    return <div className="flex flex-col space-y-2 py-16 md:space-y-4 
-        lg:h-[65vh] lg:justify-end lg:pb-12 lg:pl-24">
+    return <div className="flex flex-col space-y-2 py-16 md:space-y-4  lg:h-[65vh] lg:justify-end lg:pb-12 lg:pl-24">
         <div className="absolute top-0 left-0 h-[95hv] w-screen -z-10" style={{ height: '28%', width: '100%' }}>
             <Image
                 src={`${baseUrl}/${createRandomMedia?.backdrop_path || createRandomMedia?.poster_path}`}

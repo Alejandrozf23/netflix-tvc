@@ -48,7 +48,7 @@ export const getTopRatedMedias = async (type) => {
 
 export const getTVorMoviesByGenre = async (type, id) => {
     try {
-        const response = await fetch(`${BASE_URL}/discover/${type}?api_key=${API_KEY}&language=en-US&include_adult=false&sort_by=popularity.desc/with_genres=${id}`, {
+        const response = await fetch(`${BASE_URL}/discover/${type}?api_key=${API_KEY}&language=en-US&include_adult=false&sort_by=popularity.desc&with_genres=${id}`, {
             method: "GET",
         });
 

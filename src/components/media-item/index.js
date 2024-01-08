@@ -15,12 +15,11 @@ export default function MediaData({media, title}) {
             delay: 0.5,
             ease: [0, 0.71, 0.2, 1.01],
         }}>
-        <div className="relative cardWrapper h-28 min-w-[180px] cursor-pointer md:h-36
-            md:min-w-[260px] transform transition duration-500 hover:scale-110 hover:z-[999]">
+        <div className="relative cardWrapper h-28 min-w-[180px] cursor-pointer md:h-36 md:min-w-[260px] transform transition duration-500 hover:scale-110 hover:z-[999]">
             <Image
                 src={`${baseUrl}${media?.backdrop_path || media?.poster_path}`}
                 alt="Media"
-                fill priority
+                fill={true}
                 sizes="100vw"
                 className="rounded sm object-cover md:rounded hover:rounded-sm"
             />

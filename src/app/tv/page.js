@@ -99,7 +99,7 @@ export default function TV() {
 
     if (pageLoader) return <CircleLoader/>
 
-    return <main className=" flex min-h-screen flex-col">
+    return <main className="flex min-h-screen flex-col">
         <CommonLayout mediaData={mediaData} />
     </main>
 }
