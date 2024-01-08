@@ -7,7 +7,7 @@ import { PlusIcon, ChevronDownIcon, CheckIcon } from "@heroicons/react/24/outlin
 export default function MediaData({media, title}) {
     const baseUrl = "https://image.tmdb.org/t/p/original"
 
-    return <motion.div
+    return (<motion.div
         initial={{opacity: 0, scale: 0.5}}
         animate={{opacity: 1, scale: 1}}
         transition={{
@@ -38,5 +38,5 @@ export default function MediaData({media, title}) {
                 </button>
             </div>
         </div> 
-    </motion.div>
+    </motion.div>);
 }
