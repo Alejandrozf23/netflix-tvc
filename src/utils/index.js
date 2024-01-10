@@ -71,3 +71,17 @@ export const getTVorMovieVideosByID = async (type, id) => {
         console.log(e);
     }
 };
+
+export const getTVorMovieSearchResults = async (type, query) => {
+    try {
+        const response = await fetch(`${BASE_URL}/search/${type}?api_key=${API_KEY}&language=en-US&include_adult=false&query=${query}`, {
+            method: "GET",
+        });
+
+        const data = await response.json();
+
+        return data && data.results;
+    } catch (e) {
+        console.log(e);
+    }
+}

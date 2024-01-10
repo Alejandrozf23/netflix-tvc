@@ -43,8 +43,6 @@ export default function Watch() {
 
                 setPageLoader(false);
             }
-
-            console.log(extractMediaDetails);
         }
 
         getMediaDetails();

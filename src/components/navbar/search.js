@@ -4,6 +4,18 @@ import { AiOutlineSearch } from "react-icons/ai";
 
 export default function Search({pathName, router, 
     searchQuery, setSearchQuery, setPageLoader, setShowSearchBar}) {
+    
+    function handleSubmit(e) {
+        if (e.key === 'Enter' && searchQuery && searchQuery.trim() !== '') {
+            setPageLoader(true);
+            if (pathName.includes('/search')) {
+                router.replace(`/search/${searchQuery}`);
+            } else {
+                router.push(`/search/${searchQuery}`);
+            }
+        }
+    }
+
     return <div className="hidden md:flex justify-center items-center text-center">
         <div className="bg-[rgba(0,0,0,0.75)] border 
             border-[hsla(0,0%,100%,0.85)] px-4 items-center 
@@ -12,6 +24,7 @@ export default function Search({pathName, router,
                 <input
                     name="search"
                     value={searchQuery}
+                    onKeyUp={handleSubmit}
                     onChange={(e)=>setSearchQuery(e.target.value)}
                     placeholder="Search Movies & Series!"
                     className="bg-transparent text-[14px] font-medium h-[34px] px-4 py-2 

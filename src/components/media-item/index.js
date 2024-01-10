@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import { PlusIcon, ChevronDownIcon, CheckIcon } from "@heroicons/react/24/outline"
 import { useRouter } from "next/navigation"
 
-export default function MediaData({media, title}) {
+export default function MediaData({media, searchView = false}) {
     const router = useRouter();
     const baseUrl = "https://image.tmdb.org/t/p/original";
 
