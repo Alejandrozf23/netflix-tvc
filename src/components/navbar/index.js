@@ -8,10 +8,11 @@ import { AiOutlineSearch } from "react-icons/ai";
 import Search from "./search";
 import AccountPopup from "./account-popup";
 import CircleLoader from "../circle-loader";
+import DetailsPopup from "../details-popup";
 
 export default function Navbar() {
     const { data: session } = useSession();
-    const { pageLoader, setPageLoader, loggedInAccount, setAccounts, accounts, setLoggedInAccount } = useContext(GlobalContext);
+    const { pageLoader, setPageLoader, loggedInAccount, setAccounts, accounts, setLoggedInAccount, showDetailsPopup, setShowDetailsPopup } = useContext(GlobalContext);
     const [isScrolled, setIsScrolled] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -131,6 +132,9 @@ export default function Navbar() {
                 </div>
             </div>
         </header>
+        <DetailsPopup
+            show={showDetailsPopup}
+            setShow={setShowDetailsPopup}/>
         {
             showAccountPopup && 
             <AccountPopup accounts={accounts}

@@ -4,10 +4,14 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { PlusIcon, ChevronDownIcon, CheckIcon } from "@heroicons/react/24/outline"
 import { useRouter } from "next/navigation"
+import { useContext } from "react"
+import { GlobalContext } from "@/context"
 
 export default function MediaData({media, searchView = false}) {
     const router = useRouter();
     const baseUrl = "https://image.tmdb.org/t/p/original";
+    const {currentMediaInfoIdAndType, setCurrentMediainfoIdAndType, 
+        showDetailspopup, setShowDetailsPopup} = useContext(GlobalContext);
 
     return (<motion.div
         initial={{opacity: 0, scale: 0.5}}
@@ -35,7 +39,14 @@ export default function MediaData({media, searchView = false}) {
                             (<PlusIcon color="#ffffff" className="h-7 w-7"/>)
                     }
                 </button>
-                <button className="cursor-pointer p-2 border flex items-center gap-x-2 rounded-full
+                <button onClick={() => {
+                    setShowDetailsPopup(true);
+                    setCurrentMediainfoIdAndType({
+                        type: media?.type,
+                        id: media?.id,
+                    });
+                }}
+                    className="cursor-pointer p-2 border flex items-center gap-x-2 rounded-full
                     text-sm font-semibold transition hover:opacity-90 border-white bg-black opacity-75">
                     <ChevronDownIcon  color="#ffffff" className="h-7 w-7"/>
                 </button>
