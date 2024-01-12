@@ -85,3 +85,30 @@ export const getTVorMovieSearchResults = async (type, query) => {
         console.log(e);
     }
 }
+
+export const getTVorMovieDetailsByID = async (type, id) => {
+    try {
+        const response = await fetch(`${BASE_URL}/${type}/${id}?api_key=${API_KEY}&language=en-US&append_to_response=videos`,{
+                method: "GET",
+            }
+        );
+        return await response.json();
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+export const getSimilarTVorMovies = async (type, id) => {
+    try {
+        const response = await fetch(`${BASE_URL}/${type}/${id}/similar?api_key=${API_KEY}&language=en-US`,{
+                method: "GET",
+            }
+        );
+
+        const data = await response.json();
+        
+        return data && data.results;
+    } catch (e) {
+        console.log(e);
+    }
+};
