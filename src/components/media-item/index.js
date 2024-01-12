@@ -7,10 +7,10 @@ import { useRouter } from "next/navigation"
 import { useContext } from "react"
 import { GlobalContext } from "@/context"
 
-export default function MediaData({media, searchView = false}) {
+export default function MediaData({media, searchView = false, similarMovieView = false}) {
     const router = useRouter();
     const baseUrl = "https://image.tmdb.org/t/p/original";
-    const {currentMediaInfoIdAndType, setCurrentMediainfoIdAndType, 
+    const {currentMediaInfoIdAndType, setCurrentMediaInfoIdAndType, 
         showDetailspopup, setShowDetailsPopup} = useContext(GlobalContext);
 
     return (<motion.div
@@ -41,7 +41,7 @@ export default function MediaData({media, searchView = false}) {
                 </button>
                 <button onClick={() => {
                     setShowDetailsPopup(true);
-                    setCurrentMediainfoIdAndType({
+                    setCurrentMediaInfoIdAndType({
                         type: media?.type,
                         id: media?.id,
                     });

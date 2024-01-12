@@ -13,8 +13,10 @@ export default function GlobalState({ children }) {
     const [pageLoader, setPageLoader] = useState(true);
     const [mediaData, setMediaData] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
-    const [currentMediaInfoIdAndType, setCurrentMediainfoIdAndType] = useState(null);
+    const [currentMediaInfoIdAndType, setCurrentMediaInfoIdAndType] = useState(null);
     const [showDetailsPopup, setShowDetailsPopup] = useState(false);
+    const [mediaDetails, setMediaDetails] = useState(null);
+    const [similarMedias, setSimilarMedias] = useState([]);
 
     const {data: session} = useSession();
         
@@ -28,7 +30,8 @@ export default function GlobalState({ children }) {
         <GlobalContext.Provider value={{loggedInAccount, setLoggedInAccount, 
             accounts, setAccounts, pageLoader, setPageLoader, mediaData, setMediaData,
             searchResults, setSearchResults, showDetailsPopup, setShowDetailsPopup,
-            currentMediaInfoIdAndType, setCurrentMediainfoIdAndType}}>
+            currentMediaInfoIdAndType, setCurrentMediaInfoIdAndType, mediaDetails, setMediaDetails, 
+            similarMedias, setSimilarMedias}}>
             {children}
         </GlobalContext.Provider>
     )
