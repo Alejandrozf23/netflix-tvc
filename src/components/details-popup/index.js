@@ -1,23 +1,23 @@
 'use client'
 
-import {
-    XMarkIcon, PlusIcon,
-    HandThumbUpIcon, SpeakerWaveIcon,
-    SpeakerXMarkIcon
-} from "@heroicons/react/24/outline";
-import { motion } from "framer-motion";
-import MuiModal from "@mui/material/Modal";
-import { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "@/context";
-import { getSimilarTVorMovies, getTVorMovieDetailsByID } from "@/utils";
 import ReactPlayer from "react-player";
+import MuiModal from "@mui/material/Modal";
 import MediaItem from "@/components/media-item";
+import { motion } from "framer-motion";
+import { GlobalContext } from "@/context";
+import { AiFillPlayCircle } from "react-icons/ai";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useContext, useEffect, useState } from "react";
+import { getSimilarTVorMovies, getTVorMovieDetailsByID } from "@/utils";
+import { useRouter } from "next/navigation";
 
 export default function DetailsPopup({ show, setShow, media }) {
+    const router = useRouter();
+    const [key, setKey] = useState('');
     const { mediaDetails, setMediaDetails, similarMedias,
         setSimilarMedias, currentMediaInfoIdAndType,
         setCurrentMediaInfoIdAndType, loggedInAccount } = useContext(GlobalContext);
-    const [key, setKey] = useState('');
+    
 
     useEffect(() => {
         if (currentMediaInfoIdAndType !== null) {
@@ -63,6 +63,7 @@ export default function DetailsPopup({ show, setShow, media }) {
 
     function handleClose() {
         setShow(false);
+        setCurrentMediaInfoIdAndType(null);
     }
 
     return (<motion.div initial={{ opacity: 0, scale: 0.5 }}
@@ -90,12 +91,35 @@ export default function DetailsPopup({ show, setShow, media }) {
                         playing
                         controls
                     />
+                    <div className="absolute bottom-[4.25rem] flex w-full items-center justify-between pl-[1.5rem]">
+                        <div>
+                            <button onClick={() => router.push(`/watch/${currentMediaInfoIdAndType?.type}/${currentMediaInfoIdAndType?.id}`)}
+                                className="cursor-pointer flex items-center gap-x-2 rounded px-5 py-1.5 text-sm font-semibold 
+                                transition hover:opacity-75 md:py-2.5 md:px-8 md:text-xl bg-white text-black">
+                                <AiFillPlayCircle className="h-4 w-4 text-black md:h-7 md:w-7 cursor-pointer"/>
+                                Play
+                            </button>
+                        </div>
+                    </div>
                 </div>                
                 <div className="rounded-b-md bg-[#181818] p-8">
-                    <h2 className="cursor-pointer text-sm font-semibold text-[#e5e5e5] transition-colors duration-200 hover:text-white md:text-2xl">
+                    <div className="space-x-2 pb-4 flex gap-4">
+                        <div className="text-green-400 font-semibold flex gap-2">
+                            <span>
+                                {
+                                    mediaDetails?.release_date ?
+                                    mediaDetails?.release_date.split('-')[0]:new Date().getFullYear()
+                                }    
+                            </span>
+                            <div className="inline-flex border-2 border-white/40 rounded px-2">
+                                HD
+                            </div>
+                        </div>
+                    </div>
+                    <h2 className="mt-10 mb-6 cursor-pointer text-sm font-semibold text-[#e5e5e5] transition-colors duration-200 hover:text-white md:text-2xl">
                         More like this
                     </h2>
-                    <div className="grid grid-cols-5 items-center scrollbar-hide md:p-2">
+                    <div className="grid grid-cols-5 gap-3 items-center scrollbar-hide md:p-2">
                         {
                             similarMedias && similarMedias.length ?
                             similarMedias.filter((item) => item.backdrop_path !== null & item.poster_path !== null)

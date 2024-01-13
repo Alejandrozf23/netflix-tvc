@@ -8,9 +8,8 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 const baseUrl = "https://image.tmdb.org/t/p/original"
 
 export default function Banner({ medias }) {
-    const createRandomMedia = medias && medias.length ? medias[Math.floor(Math.random() * medias.length)] : null;
-
     const router = useRouter();
+    const createRandomMedia = medias && medias.length ? medias[Math.floor(Math.random() * medias.length)] : null;
 
     return (<div className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12 lg:pl-24">
         <div className="absolute top-0 left-0 h-[95vh] w-screen -z-10">
