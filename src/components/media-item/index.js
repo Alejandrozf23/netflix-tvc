@@ -6,12 +6,40 @@ import { PlusIcon, ChevronDownIcon, CheckIcon } from "@heroicons/react/24/outlin
 import { useRouter } from "next/navigation"
 import { useContext } from "react"
 import { GlobalContext } from "@/context"
+import { useSession } from "next-auth/react"
 
 export default function MediaData({media, searchView = false, similarMovieView = false}) {
     const router = useRouter();
+    const { data: session } = useSession();
     const baseUrl = "https://image.tmdb.org/t/p/original";
     const {currentMediaInfoIdAndType, setCurrentMediaInfoIdAndType, 
-        showDetailspopup, setShowDetailsPopup} = useContext(GlobalContext);
+        showDetailspopup, setShowDetailsPopup, loggedInAccount} = useContext(GlobalContext);
+
+    async function handleAddToFavorites(item) {
+        const { backdrop_path, poster_path, id, type } = item;
+        const response = await fetch('/api/favorites/add-favorite', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                backdrop_path,
+                poster_path,
+                movieID: id,
+                type,
+                uid: session?.user?.uid,
+                accountID: loggedInAccount?._id,
+            }),
+        });
+
+        const data = await response.json();
+
+        console.log(data, 'adejesuszf');
+    }
+
+    async function handleRemoveFavorites(item) {
+
+    }
 
     return (<motion.div
         initial={{opacity: 0, scale: 0.5}}
@@ -31,7 +59,11 @@ export default function MediaData({media, searchView = false, similarMovieView =
                 onClick={() => router.push(`/watch/${media?.type}/${media?.id}`) }
             />
             <div className="space-x-3 hidden absolute p-2 bottom-0 buttonWrapper">
-                <button className=" cursor-pointer border flex p-2 items-center gap-x-2 rounded-full text-sm
+                <button onClick={
+                    media?.addedToFavorites 
+                        ? () => handleRemoveFavorites(media) 
+                        : () => handleAddToFavorites(media)}
+                    className="cursor-pointer border flex p-2 items-center gap-x-2 rounded-full text-sm
                     font-semibold transition hover:opacity-90 border-white bg-black opacity-75 text-black">
                     {
                         media?.addedToFavorites ? 
