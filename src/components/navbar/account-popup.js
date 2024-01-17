@@ -10,7 +10,7 @@ export default function AccountPopup({ accounts,
         <div className="flex flex-col gap-3">
             {
                 accounts
-                    .filter(item => item._id !== loggedInAccount._id)
+                    .filter(item => item._id !== loggedInAccount?._id)
                     .map(account => <div onClick={() => { setLoggedInAccount(null); sessionStorage.removeItem('loggedInAccount') }}
                         className="cursor-pointer flex gap-5" key={account._id}>
                         <img src="https://occ-0-2611-3663.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABfNXUMVXGhnCZwPI1SghnGpmUgqS_J-owMff-jig42xPF7vozQS1ge5xTgPTzH7ttfNYQXnsYs4vrMBaadh4E6RTJMVepojWqOXx.png?r=1d4"

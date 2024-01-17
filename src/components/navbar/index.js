@@ -39,7 +39,7 @@ export default function Navbar() {
         {
             id: 'my-list',
             title: 'My list',
-            path: `/my-list/${session?.user?.uid}/${loggedInAccount._id}`
+            path: `/my-list/${session?.user?.uid}/${loggedInAccount?._id}`
         }
     ]
 

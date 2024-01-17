@@ -8,7 +8,7 @@ import { useContext } from "react"
 import { GlobalContext } from "@/context"
 import { useSession } from "next-auth/react"
 
-export default function MediaData({media, searchView = false, similarMovieView = false}) {
+export default function MediaData({media, searchView = false, similarMovieView = false, listView = false}) {
     const router = useRouter();
     const { data: session } = useSession();
     const baseUrl = "https://image.tmdb.org/t/p/original";
