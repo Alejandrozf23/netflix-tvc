@@ -9,6 +9,6 @@ const NewFavoriteSchema = new mongoose.Schema({
     type: String
 }, { timestamps: true });
 
-const Favorites = mongoose.model.Favorites || mongoose.model('Favorites', NewFavoriteSchema);
+const Favorites = mongoose.models.Favorites || mongoose.model('Favorites', NewFavoriteSchema);
 
 export default Favorites;
