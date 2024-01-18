@@ -6,7 +6,7 @@ import CommonLayout from "@/components/common-layout";
 import { GlobalContext } from "@/context";
 import { useSession } from "next-auth/react"
 import { useContext, useEffect } from "react";
-import { getPopularMedias, getTopRatedMedias, getTrendingMedias } from "@/utils";
+import { getAllfavorites, getPopularMedias, getTopRatedMedias, getTrendingMedias } from "@/utils";
 import CircleLoader from "@/components/circle-loader";
 
 export default function Browse() {
@@ -24,6 +24,7 @@ export default function Browse() {
             const trendingMovieSHow = await getTrendingMedias('movie');
             const popularMovieSHow = await getPopularMedias('movie');
             const topratedMovieSHow = await getTopRatedMedias('movie');
+            const allfavorites = await getAllfavorites(session?.user?.uid, loggedInAccount?._id);
 
             setMediaData(
                 [
@@ -47,7 +48,9 @@ export default function Browse() {
                         ...item,
                         medias: item.medias.map(mediaItem => ({
                             ...mediaItem,
-                            type: "tv"
+                            type: "tv",
+                            addedToFavorites: allfavorites && allfavorites.length ?
+                                allfavorites.map(fav => fav.movieID).indexOf(mediaItem.id) > -1 : false,
                         }))
                     })),
                     ...[
@@ -70,7 +73,9 @@ export default function Browse() {
                         ...item,
                         medias: item.medias.map(mediaItem => ({
                             ...mediaItem,
-                            type: "movie"
+                            type: "movie",
+                            addedToFavorites: allfavorites && allfavorites.length ?
+                                allfavorites.map(fav => fav.movieID).indexOf(mediaItem.id) > -1 : false,
                         }))
                     }))
                 ]

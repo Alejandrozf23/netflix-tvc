@@ -18,7 +18,9 @@ export default function MyList() {
             const data = await getAllfavorites(session?.user?.uid, loggedInAccount?._id);
             console.log(data);
             if (data) {
-                setFavorites(data);
+                setFavorites(data.map(item=> ({
+                    ...item, addedToFavorites : true
+                })));
                 setPageLoader(false);
             }
         }
@@ -42,7 +44,7 @@ export default function MyList() {
                             favorites.map(searchItem => (
                                 <MediaItem key={searchItem._id} media={searchItem} searchView={true} />
                             ))
-                            : null
+                            : 'No favorites added'
                     }
                 </div>
             </div>

@@ -30,6 +30,7 @@ export default function Movies() {
             const drama = await getTVorMoviesByGenre("movie", 18);
             const thriller = await getTVorMoviesByGenre("movie", 53);
             const horror = await getTVorMoviesByGenre("movie", 27);
+            const allfavorites = await getAllfavorites(session?.user?.uid, loggedInAccount?._id);
 
             setMediaData(
                 [
@@ -103,7 +104,8 @@ export default function Movies() {
                     medias: item.medias.map((mediaItem) => ({
                         ...mediaItem,
                         type: "movie",
-                        addedToFavorites: false
+                        addedToFavorites: allfavorites && allfavorites.length ?
+                                allfavorites.map(fav => fav.movieID).indexOf(mediaItem.id) > -1 : false,
                     })),
                 }))
             );
