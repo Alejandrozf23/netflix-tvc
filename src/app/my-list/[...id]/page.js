@@ -16,9 +16,9 @@ export default function MyList() {
     useEffect(() => {
         async function extractFavorites() {
             const data = await getAllfavorites(session?.user?.uid, loggedInAccount?._id);
-            console.log(data);
+            
             if (data) {
-                setFavorites(data.map(item=> ({
+                setFavorites(data.map(item => ({
                     ...item, addedToFavorites : true
                 })));
                 setPageLoader(false);
@@ -42,7 +42,7 @@ export default function MyList() {
                     {
                         favorites && favorites.length ?
                             favorites.map(searchItem => (
-                                <MediaItem key={searchItem._id} media={searchItem} searchView={true} />
+                                <MediaItem key={searchItem._id} media={searchItem} listView={true} />
                             ))
                             : 'No favorites added'
                     }
