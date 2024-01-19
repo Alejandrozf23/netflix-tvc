@@ -24,7 +24,7 @@ export async function POST(request) {
 
         if (newlyCreatedFavorite) {
             return NextResponse.json({
-                succes: true,
+                success: true,
                 message: "Added to your list successfully!",
             });
         } else {

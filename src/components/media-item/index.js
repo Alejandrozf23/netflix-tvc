@@ -3,18 +3,33 @@
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { PlusIcon, ChevronDownIcon, CheckIcon } from "@heroicons/react/24/outline"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useContext } from "react"
 import { GlobalContext } from "@/context"
 import { useSession } from "next-auth/react"
+import { getAllfavorites } from "@/utils"
 
 export default function MediaData({media, searchView = false, similarMovieView = false, listView = false}) {
     const router = useRouter();
+    const pathName = usePathname();
     const { data: session } = useSession();
     const baseUrl = "https://image.tmdb.org/t/p/original";
     const {currentMediaInfoIdAndType, setCurrentMediaInfoIdAndType, 
-        showDetailspopup, setShowDetailsPopup, loggedInAccount} = useContext(GlobalContext);
+        showDetailspopup, setShowDetailsPopup, loggedInAccount,
+        setFavorites} = useContext(GlobalContext);
 
+    async function updateFavorites() {
+        const response = await getAllfavorites(session?.user?.uid, loggedInAccount?._id);
+        if (response) {
+            setFavorites(
+                response.map((item) => ({
+                    ...item,
+                    addedToFavorites: true,
+                }))
+            );
+        }
+    }
+    
     async function handleAddToFavorites(item) {
         const { backdrop_path, poster_path, id, type } = item;
         const response = await fetch('/api/favorites/add-favorite', {
@@ -31,10 +46,11 @@ export default function MediaData({media, searchView = false, similarMovieView =
                 accountID: loggedInAccount?._id,
             }),
         });
-
         const data = await response.json();
-
-        console.log(data, 'adejesuszf');
+        console.log(data, 'data')
+        if (data && data.success) {
+            if (pathName.includes("my-list")) updateFavorites();
+        }
     }
 
     async function handleRemoveFavorites(item) {
@@ -75,7 +91,7 @@ export default function MediaData({media, searchView = false, similarMovieView =
                     setShowDetailsPopup(true);
                     setCurrentMediaInfoIdAndType({
                         type: media?.type,
-                        id: media?.id,
+                        id: listView ? media?.movieID: media?.id,
                     });
                 }}
                     className="cursor-pointer p-2 border flex items-center gap-x-2 rounded-full
