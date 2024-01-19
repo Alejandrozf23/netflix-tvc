@@ -5,7 +5,7 @@ import ManageAccounts from "@/components/manage-account";
 import UnauthPage from "@/components/unauth-page";
 import { motion } from "framer-motion";
 import { GlobalContext } from "@/context";
-import { getTVorMovieSearchResults } from "@/utils";
+import { getAllfavorites, getTVorMovieSearchResults } from "@/utils";
 import { useSession } from "next-auth/react"
 import { useParams } from "next/navigation";
 import { useContext, useEffect } from "react";
@@ -22,6 +22,7 @@ export default function Search() {
         async function getSearchResults() {
             const series = await getTVorMovieSearchResults('tv', params.query);
             const movies = await getTVorMovieSearchResults('movie', params.query);
+            const allfavorites = await getAllfavorites(session?.user?.uid, loggedInAccount?._id);
             
             setSearchResults(
                 [
@@ -30,14 +31,16 @@ export default function Search() {
                         .map(serieItem => ({
                             ...serieItem,
                             type: 'tv',
-                            addedToFavorites: false
+                            addedToFavorites: allfavorites && allfavorites.length ?
+                                allfavorites.map(fav => fav.movieID).indexOf(serieItem.id) > -1 : false,
                         })),
                     ...movies.filter(
                         item => item.backdrop_path !== null && item.poster_path !== null)
                         .map(movieItem => ({
                             ...movieItem,
                             type: 'movie',
-                            addedToFavorites: false
+                            addedToFavorites: allfavorites && allfavorites.length ?
+                                allfavorites.map(fav => fav.movieID).indexOf(movieItem.id) > -1 : false,
                         })),
                 ]
             );
