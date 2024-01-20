@@ -16,7 +16,8 @@ export default function MediaData({media, searchView = false, similarMovieView =
     const baseUrl = "https://image.tmdb.org/t/p/original";
     const {currentMediaInfoIdAndType, setCurrentMediaInfoIdAndType, 
         showDetailspopup, setShowDetailsPopup, loggedInAccount,
-        setFavorites} = useContext(GlobalContext);
+        setFavorites, setSimilarMovies, similarMovies, 
+        searchResults, setSearchResults, mediaData, setMediaData} = useContext(GlobalContext);
 
     async function updateFavorites() {
         const response = await getAllfavorites(session?.user?.uid, loggedInAccount?._id);
@@ -47,9 +48,24 @@ export default function MediaData({media, searchView = false, similarMovieView =
             }),
         });
         const data = await response.json();
-        console.log(data, 'data')
+        
         if (data && data.success) {
             if (pathName.includes("my-list")) updateFavorites();
+            if (searchView) {
+                let updatedSearchResults = [...searchResults];
+                const indexOfCurrentAddedMedia = updatedSearchResults.findIndex(
+                    (item) => item.id === id
+                );
+                updatedSearchResults[indexOfCurrentAddedMedia] = {
+                    ...updatedSearchResults[indexOfCurrentAddedMedia],
+                    addedToFavorites: true,
+                }
+                setSearchResults(updatedSearchResults);
+            } else if (similarMovieView) {
+
+            } else {
+
+            }
         }
     }
 
