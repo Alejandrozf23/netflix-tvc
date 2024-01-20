@@ -8,11 +8,13 @@ import { GlobalContext } from "@/context";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useContext, useEffect, useState } from "react";
-import { getSimilarTVorMovies, getTVorMovieDetailsByID } from "@/utils";
+import { getAllfavorites, getSimilarTVorMovies, getTVorMovieDetailsByID } from "@/utils";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function DetailsPopup({ show, setShow, media }) {
     const router = useRouter();
+    const { data: session } = useSession();
     const [key, setKey] = useState('');
     const { mediaDetails, setMediaDetails, similarMedias,
         setSimilarMedias, currentMediaInfoIdAndType,
@@ -22,6 +24,8 @@ export default function DetailsPopup({ show, setShow, media }) {
     useEffect(() => {
         if (currentMediaInfoIdAndType !== null) {
             async function getMediaDetails() {
+                const allfavorites = await getAllfavorites(session?.user?.uid, loggedInAccount?._id);
+
                 const extractMediaDetails  = await getTVorMovieDetailsByID(
                     currentMediaInfoIdAndType.type,
                     currentMediaInfoIdAndType.id);
@@ -54,7 +58,8 @@ export default function DetailsPopup({ show, setShow, media }) {
                 setSimilarMedias(extractSimilarMovies.map(item => ({
                     ...item,
                     type: currentMediaInfoIdAndType.type === 'movie' ? 'movie': 'tv',
-                    addedToFavorites: false
+                    addedToFavorites: allfavorites && allfavorites.length ?
+                        allfavorites.map(fav => fav.movieID).indexOf(item.id) > -1 : false,
                 })));
             }
             getMediaDetails();

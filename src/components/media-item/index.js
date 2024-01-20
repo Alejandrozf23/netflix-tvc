@@ -16,7 +16,7 @@ export default function MediaData({media, searchView = false, similarMovieView =
     const baseUrl = "https://image.tmdb.org/t/p/original";
     const {currentMediaInfoIdAndType, setCurrentMediaInfoIdAndType, 
         showDetailspopup, setShowDetailsPopup, loggedInAccount,
-        setFavorites, setSimilarMovies, similarMovies, 
+        setFavorites, setSimilarMedias, similarMedias, 
         searchResults, setSearchResults, mediaData, setMediaData} = useContext(GlobalContext);
 
     async function updateFavorites() {
@@ -62,7 +62,15 @@ export default function MediaData({media, searchView = false, similarMovieView =
                 }
                 setSearchResults(updatedSearchResults);
             } else if (similarMovieView) {
-
+                let updatedSimilarMedias = [...similarMedias];
+                const indexOfCurrentAddedMedia = updatedSimilarMedias.findIndex(
+                    (item) => item.id === id
+                );
+                updatedSimilarMedias[indexOfCurrentAddedMedia] = {
+                    ...updatedSimilarMedias[indexOfCurrentAddedMedia],
+                    addedToFavorites: true,
+                }
+                setSimilarMedias(updatedSimilarMedias);
             } else {
 
             }
