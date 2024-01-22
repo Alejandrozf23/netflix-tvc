@@ -93,7 +93,13 @@ export default function MediaData({ media, searchView = false, similarMovieView 
     }
 
     async function handleRemoveFavorites(item) {
+        const response = await fetch(`/api/favorites/remove-favorite?id=${item._id}`, {
+            method: 'DELETE'
+        });
 
+        const data = await response.json();
+
+        if (data.success) updateFavorites();
     }
 
     return (<motion.div
@@ -116,10 +122,11 @@ export default function MediaData({ media, searchView = false, similarMovieView 
             <div className="space-x-3 hidden absolute p-2 bottom-0 buttonWrapper">
                 <button onClick={
                     media?.addedToFavorites
-                        ? () => handleRemoveFavorites(media)
+                        ? listView ? () => handleRemoveFavorites(media) : null
                         : () => handleAddToFavorites(media)}
-                    className="cursor-pointer border flex p-2 items-center gap-x-2 rounded-full text-sm
-                    font-semibold transition hover:opacity-90 border-white bg-black opacity-75 text-black">
+                    className={`${media?.addedToFavorites && !listView && 'cursor-not-allowed'} 
+                        cursor-pointer border flex p-2 items-center gap-x-2 rounded-full text-sm font-semibold 
+                        transition hover:opacity-90 border-white bg-black opacity-75 text-black`}>
                     {
                         media?.addedToFavorites ?
                             (<CheckIcon color="#ffffff" className="h-7 w-7" />) :
