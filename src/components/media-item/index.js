@@ -117,7 +117,7 @@ export default function MediaData({ media, searchView = false, similarMovieView 
                 fill={true}
                 sizes="100vw"
                 className="rounded sm object-cover md:rounded hover:rounded-sm"
-                onClick={() => router.push(`/watch/${media?.type}/${media?.id}`)}
+                onClick={() => router.push(`/watch/${media?.type}/${listView ? media?.movieID:media?.id}`)}
             />
             <div className="space-x-3 hidden absolute p-2 bottom-0 buttonWrapper">
                 <button onClick={
