@@ -83,6 +83,7 @@ export default function ManageAccounts() {
     }
 
     async function handlePinSubmit(value, index) {
+        setPageLoader(true);
         const response = await fetch('/api/account/login-to-account', {
             method: 'POST',
             headers: {
@@ -120,7 +121,7 @@ export default function ManageAccounts() {
             <h1 className="text-white font-bold text-[54px] my-[36px]">
                 Who's Watching?
             </h1>
-            <ul className="flex gap-8 p-0 my-[25px]">
+            <ul className="flex p-0 my-[25px]">
                 {
                     accounts && accounts.length ?
                         accounts.map(item => (<li className="w-[155px] flex flex-col cursor-pointer
