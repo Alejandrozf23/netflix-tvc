@@ -8,6 +8,8 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/navbar";
 import MediaItem from "@/components/media-item";
 import CircleLoader from "@/components/circle-loader";
+import UnauthPage from "@/components/unauth-page";
+import ManageAccounts from "@/components/manage-account";
 
 export default function MyList() {
     const { data: session } = useSession();
@@ -27,6 +29,8 @@ export default function MyList() {
         extractFavorites();
     }, [loggedInAccount]);
 
+    if (session === null) return <UnauthPage/>    
+    if (loggedInAccount === null) return <ManageAccounts/>
     if (pageLoader) return <CircleLoader/>
 
     return (

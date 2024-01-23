@@ -100,7 +100,11 @@ export default function ManageAccounts() {
         if (data.success) {
             setLoggedInAccount(showPinContainer.account);
             sessionStorage.setItem('loggedInAccount', JSON.stringify(showPinContainer.account));
-            router.push(pathName);
+            if (pathName.includes('my-list')) {
+                router.push(`/my-list/${session?.user?.uid}/${showPinContainer.account?._id}`);
+            } else {
+                router.push(pathName);
+            }            
             setPageLoader(false);
         } else {
             setPageLoader(false);
