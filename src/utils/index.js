@@ -62,9 +62,9 @@ export const getTVorMoviesByGenre = async (type, id) => {
 
 export const getTVorMovieVideosByID = async (type, id) => {
     try {
-        const response = await fetch(`${BASE_URL}/${type}/${id}/videos?api_key=${API_KEY}&language=en-US&append_to_response=videos`,{
-                method: "GET",
-            }
+        const response = await fetch(`${BASE_URL}/${type}/${id}/videos?api_key=${API_KEY}&language=en-US&append_to_response=videos`, {
+            method: "GET",
+        }
         );
         return await response.json();
     } catch (e) {
@@ -88,9 +88,9 @@ export const getTVorMovieSearchResults = async (type, query) => {
 
 export const getTVorMovieDetailsByID = async (type, id) => {
     try {
-        const response = await fetch(`${BASE_URL}/${type}/${id}?api_key=${API_KEY}&language=en-US&append_to_response=videos`,{
-                method: "GET",
-            }
+        const response = await fetch(`${BASE_URL}/${type}/${id}?api_key=${API_KEY}&language=en-US&append_to_response=videos`, {
+            method: "GET",
+        }
         );
         return await response.json();
     } catch (e) {
@@ -100,13 +100,13 @@ export const getTVorMovieDetailsByID = async (type, id) => {
 
 export const getSimilarTVorMovies = async (type, id) => {
     try {
-        const response = await fetch(`${BASE_URL}/${type}/${id}/similar?api_key=${API_KEY}&language=en-US`,{
-                method: "GET",
-            }
+        const response = await fetch(`${BASE_URL}/${type}/${id}/similar?api_key=${API_KEY}&language=en-US`, {
+            method: "GET",
+        }
         );
 
         const data = await response.json();
-        
+
         return data && data.results;
     } catch (e) {
         console.log(e);
@@ -115,15 +115,29 @@ export const getSimilarTVorMovies = async (type, id) => {
 
 export const getAllfavorites = async (uid, accountID) => {
     try {
-      const response = await fetch(`/api/favorites/get-all-favorites?id=${uid}&accountID=${accountID}`,{
-          method: "GET",
+        const response = await fetch(`/api/favorites/get-all-favorites?id=${uid}&accountID=${accountID}`, {
+            method: "GET",
         }
-      );
-  
-      const data = await response.json();
-  
-      return data && data.data;
+        );
+
+        const data = await response.json();
+
+        return data && data.data;
     } catch (e) {
-      console.log(e);
+        console.log(e);
     }
-  };
+};
+
+export const getAllQuestions = async (uid, accountID) => {
+    try {
+        const response = await fetch(`/api/questions/get-all-questions`, {
+            method: "GET",
+        }
+        );
+
+        const data = await response.json();
+        return data && data.data;
+    } catch (e) {
+        console.log(e);
+    }
+};
