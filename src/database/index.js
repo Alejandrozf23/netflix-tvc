@@ -16,4 +16,14 @@ const connectMongoDB = async () => {
     }
 }
 
+const connectMongoDBTest = async (origin) => {
+    console.log("Request origin = " + origin);
+    try {
+        await mongoose.connect(uri);
+        console.log('Mongo connection successfully!');
+    } catch (e) {
+        console.error('Error to connect Mongo: ', e.message);
+    }
+}
+
 export default connectMongoDB;

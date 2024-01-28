@@ -128,9 +128,9 @@ export const getAllfavorites = async (uid, accountID) => {
     }
 };
 
-export const getAllQuestions = async (uid, accountID) => {
+export const getAllQuestions = async (origin) => {
     try {
-        const response = await fetch(`/api/questions/get-all-questions`, {
+        const response = await fetch(`/api/questions/get-all-questions?origin=${origin}`, {
             method: "GET",
         }
         );

@@ -1,4 +1,4 @@
-import connectMongoDB from "@/database";
+import connectMongoDB from "@/database/MongoConnection";
 import { NextResponse } from "next/server";
 import Question from "@/models/Question";
 
@@ -6,6 +6,8 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request) {
     try {
+        const {searchParams} = new URL(request.url);
+        const origin = searchParams.get('origin');
         await connectMongoDB();
         const getAllQuestions = await Question.find();
         
