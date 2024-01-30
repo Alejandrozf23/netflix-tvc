@@ -1,4 +1,4 @@
-import connectMongoDB from "@/database";
+import createConnectionMongo from "@/database";
 import Account from "@/models/Account";
 import { compare } from "bcryptjs";
 import { NextResponse } from "next/server";
@@ -7,7 +7,9 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request) {
     try {
-        await connectMongoDB();
+        const {searchParams} = new URL(request.url);
+        const origin = searchParams.get('origin');
+        await createConnectionMongo(origin);
 
         const {pin, accountId, uid} = await request.json();
 
@@ -37,7 +39,7 @@ export async function POST(request) {
         console.log(e);
         return NextResponse.json({
             success: false,
-            message: "Something wnet wrong!",
+            message: "Something went wrong!",
         });
     }
 }

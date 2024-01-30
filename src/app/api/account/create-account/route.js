@@ -1,4 +1,4 @@
-import connectMongoDB from "@/database";
+import createConnectionMongo from "@/database";
 import Account from "@/models/Account";
 import { hash } from "bcryptjs";
 import { NextResponse } from "next/server";
@@ -7,7 +7,9 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request) {
     try {
-        await connectMongoDB();
+        const {searchParams} = new URL(request.url);
+        const origin = searchParams.get('origin');
+        await createConnectionMongo(origin);
         const {name, pwd, uid} = await request.json();
         const isAccountAlreadyExists = await Account.find({uid, name});
         const allAccounts = await Account.find({});

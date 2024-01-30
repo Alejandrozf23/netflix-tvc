@@ -1,4 +1,4 @@
-import connectMongoDB from "@/database";
+import createConnectionMongo from "@/database";
 import Account from "@/models/Account";
 import { NextResponse } from "next/server";
 
@@ -6,9 +6,10 @@ export const dynamic = "force-dynamic";
 
 export async function DELETE(request) {
     try {
-        await connectMongoDB();
         const {searchParams} = new URL(request.url);
+        const origin = searchParams.get('origin');        
         const id = searchParams.get('id');
+        await createConnectionMongo(origin);
 
         if (!id) {
             return NextResponse.json({

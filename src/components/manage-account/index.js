@@ -27,9 +27,9 @@ export default function ManageAccounts() {
     const pathName = usePathname();
     const router = useRouter();
 
-    async function getAllAccounts() {
+    async function getAllAccounts(origin) {
         const response = await fetch(
-            `/api/account/get-all-accounts?id=${session?.user.uid}`,
+            `/api/account/get-all-accounts?id=${session?.user.uid}&origin=${origin}`,
             { method: "GET" }
         );
 
@@ -44,11 +44,12 @@ export default function ManageAccounts() {
     }
 
     useEffect(() => {
-        getAllAccounts();
+        getAllAccounts("ManageAccounts-getAllAccounts/useEffect");
     }, []);
 
     async function handleSave() {
-        const response = await fetch('/api/account/create-account', {
+        const origin = "ManageAccounts-createAccount";
+        const response = await fetch(`/api/account/create-account?origin=${origin}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -61,30 +62,32 @@ export default function ManageAccounts() {
 
         const data = await response.json();
         if (data.success) {
-            getAllAccounts();
+            getAllAccounts("ManageAccounts-getAllAccounts/handleSave/Success");
             setFormData(initialFormData);
             setShowAccountForm(false);
         } else {
-            getAllAccounts();
+            getAllAccounts("ManageAccounts-getAllAccounts/handleSave/Failed");
         }
     }
 
     async function handleRemoveAccount(getItem) {
-        const response = await fetch(`/api/account/remove-account?id=${getItem._id}`, {
+        const origin = "ManageAccounts-removeAccount";
+        const response = await fetch(`/api/account/remove-account?id=${getItem._id}&origin=${origin}`, {
             method: 'DELETE'
         });
 
         const data = await response.json();
 
         if (data.success) {
-            getAllAccounts();
+            getAllAccounts("ManageAccounts-getAllAccounts/handleRemoveAccount/Success");
             setShowDeleteIcon(false);
         }
     }
 
     async function handlePinSubmit(value, index) {
         setPageLoader(true);
-        const response = await fetch('/api/account/login-to-account', {
+        const origin = "ManageAccounts-loginAccount"
+        const response = await fetch(`/api/account/login-to-account?origin=${origin}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -1,4 +1,4 @@
-import connectMongoDB from "@/database/MongoConnection";
+import createConnectionMongo from "@/database";
 import { NextResponse } from "next/server";
 import Question from "@/models/Question";
 
@@ -8,7 +8,7 @@ export async function GET(request) {
     try {
         const {searchParams} = new URL(request.url);
         const origin = searchParams.get('origin');
-        await connectMongoDB();
+        await createConnectionMongo(origin);
         const getAllQuestions = await Question.find();
         
         if (getAllQuestions) {

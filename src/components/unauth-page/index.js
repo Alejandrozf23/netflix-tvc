@@ -11,7 +11,7 @@ let questions = [];
 
 function UnauthBanner({ router }) {
     async function getAllMedias() {
-        questions = await getAllQuestions();
+        questions = await getAllQuestions("UnauthBanner-getAllMedias");
     }
 
     getAllMedias();
