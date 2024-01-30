@@ -7,16 +7,7 @@ const { MONGO_USER, MONGO_PASSWORD } = process.env;
 
 const uri = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@clusterntvc.mib10go.mongodb.net/?retryWrites=true&w=majority`;
 
-const connectMongoDB = async () => {
-    try {
-        await mongoose.connect(uri);
-        console.log('Mongo connection successfully!');
-    } catch (e) {
-        console.error('Error to connect Mongo: ', e.message);
-    }
-}
-
-const connectMongoDBTest = async (origin) => {
+const createConnectionMongo = async (origin) => {
     console.log("Request origin = " + origin);
     try {
         await mongoose.connect(uri);
@@ -26,4 +17,4 @@ const connectMongoDBTest = async (origin) => {
     }
 }
 
-export default connectMongoDB;
+export default createConnectionMongo;
