@@ -1,4 +1,4 @@
-import connectMongoDB from "@/database";
+import createConnectionMongo from "@/database";
 import Favorites from "@/models/Favorite";
 import { NextResponse } from "next/server";
 
@@ -6,7 +6,10 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request) {
     try {
-        await connectMongoDB();
+        const {searchParams} = new URL(request.url);
+        const origin = searchParams.get('origin');
+        await createConnectionMongo(origin);
+        
         const data = await request.json();
         const isFavoriteAlreadyExists = await Favorites.find({ 
             uid: data.uid, 

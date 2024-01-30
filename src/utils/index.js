@@ -113,9 +113,9 @@ export const getSimilarTVorMovies = async (type, id) => {
     }
 };
 
-export const getAllfavorites = async (uid, accountID) => {
+export const getAllfavorites = async (uid, accountID, origin) => {
     try {
-        const response = await fetch(`/api/favorites/get-all-favorites?id=${uid}&accountID=${accountID}`, {
+        const response = await fetch(`/api/favorites/get-all-favorites?id=${uid}&accountID=${accountID}&origin=${origin}`, {
             method: "GET",
         }
         );
