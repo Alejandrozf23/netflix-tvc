@@ -181,7 +181,9 @@ export default function ManageAccounts() {
             </ul>
             <div className="text-center">
                 <span onClick={() => setShowDeleteIcon(!showDeleteIcon)}
-                    className="border border-gray-100 cursor-pointer tracking-wide inline-flex text-sm px-[1.5m] py-[0.5em]">
+                    className="border-gray-100 cursor-pointer tracking-wide inline-flex text-sm px-[1.5em] py-[0.5em] 
+                        rounded-full border-2 transition-all duration-300 hover:bg-gray-700 hover:text-white 
+                        hover:border-gray-700">
                     Manage Profiles
                 </span>
             </div>
