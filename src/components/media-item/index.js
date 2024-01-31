@@ -19,8 +19,8 @@ export default function MediaData({ media, searchView = false, similarMovieView 
         setFavorites, setSimilarMedias, similarMedias,
         searchResults, setSearchResults, mediaData, setMediaData } = useContext(GlobalContext);
 
-    async function updateFavorites() {
-        const response = await getAllfavorites(session?.user?.uid, loggedInAccount?._id);
+    async function updateFavorites(origin) {        
+        const response = await getAllfavorites(session?.user?.uid, loggedInAccount?._id, origin);
         if (response) {
             setFavorites(
                 response.map((item) => ({
@@ -32,8 +32,9 @@ export default function MediaData({ media, searchView = false, similarMovieView 
     }
 
     async function handleAddToFavorites(item) {
+        const origin = "MediaData-addFavorite";
         const { backdrop_path, poster_path, id, type } = item;
-        const response = await fetch('/api/favorites/add-favorite', {
+        const response = await fetch(`/api/favorites/add-favorite?origin=${origin}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -50,7 +51,7 @@ export default function MediaData({ media, searchView = false, similarMovieView 
         const data = await response.json();
 
         if (data && data.success) {
-            if (pathName.includes("my-list")) updateFavorites();
+            if (pathName.includes("my-list")) updateFavorites("MediaData-updateFavorites/handleAddToFavorites");
             if (searchView) {
                 let updatedSearchResults = [...searchResults];
                 const indexOfCurrentAddedMedia = updatedSearchResults.findIndex(
@@ -93,13 +94,14 @@ export default function MediaData({ media, searchView = false, similarMovieView 
     }
 
     async function handleRemoveFavorites(item) {
-        const response = await fetch(`/api/favorites/remove-favorite?id=${item._id}`, {
+        const origin = "MediaData-removeFavorite";
+        const response = await fetch(`/api/favorites/remove-favorite?id=${item._id}&origin=${origin}`, {
             method: 'DELETE'
         });
 
         const data = await response.json();
 
-        if (data.success) updateFavorites();
+        if (data.success) updateFavorites("MediaData-updateFavorites/handleRemoveFavorites");
     }
 
     return (<motion.div
