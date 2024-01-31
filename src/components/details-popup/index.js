@@ -24,7 +24,8 @@ export default function DetailsPopup({ show, setShow, media }) {
     useEffect(() => {
         if (currentMediaInfoIdAndType !== null) {
             async function getMediaDetails() {
-                const allfavorites = await getAllfavorites(session?.user?.uid, loggedInAccount?._id);
+                const origin = "DetailsPopup-getMediaDetails/useEffect";
+                const allfavorites = await getAllfavorites(session?.user?.uid, loggedInAccount?._id, origin);
 
                 const extractMediaDetails  = await getTVorMovieDetailsByID(
                     currentMediaInfoIdAndType.type,
