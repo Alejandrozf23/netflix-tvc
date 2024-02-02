@@ -17,7 +17,8 @@ export default function MyList() {
 
     useEffect(() => {
         async function extractFavorites() {
-            const data = await getAllfavorites(session?.user?.uid, loggedInAccount?._id);
+            const origin = "MyList-extractFavorites/useEffect"
+            const data = await getAllfavorites(session?.user?.uid, loggedInAccount?._id, origin);
             
             if (data) {
                 setFavorites(data.map(item => ({
