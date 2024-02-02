@@ -17,6 +17,7 @@ export default function Browse() {
 
     useEffect(() => {
         async function getAllMedias() {
+            const origin = "Browse-getAllMedias/useEffect";
             const trendingTvSHow = await getTrendingMedias('tv');
             const popularTvSHow = await getPopularMedias('tv');
             const topratedTvSHow = await getTopRatedMedias('tv');
@@ -24,7 +25,7 @@ export default function Browse() {
             const trendingMovieSHow = await getTrendingMedias('movie');
             const popularMovieSHow = await getPopularMedias('movie');
             const topratedMovieSHow = await getTopRatedMedias('movie');
-            const allfavorites = await getAllfavorites(session?.user?.uid, loggedInAccount?._id);
+            const allfavorites = await getAllfavorites(session?.user?.uid, loggedInAccount?._id, origin);
 
             setMediaData(
                 [
