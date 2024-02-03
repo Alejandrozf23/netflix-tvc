@@ -20,9 +20,10 @@ export default function Search() {
 
     useEffect(() => {
         async function getSearchResults() {
+            const origin = "Search-getSearchResults/useEffect"
             const series = await getTVorMovieSearchResults('tv', params.query);
             const movies = await getTVorMovieSearchResults('movie', params.query);
-            const allfavorites = await getAllfavorites(session?.user?.uid, loggedInAccount?._id);
+            const allfavorites = await getAllfavorites(session?.user?.uid, loggedInAccount?._id, origin);
             
             setSearchResults(
                 [
